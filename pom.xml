@@ -13,6 +13,9 @@
   <modules>
     <module>spring-demo</module>
     <module>node-discovery</module>
+    <module>node-configuration</module>
+    <module>ms-order</module>
+    <module>ms-common</module>
   </modules>
 
   <properties>
