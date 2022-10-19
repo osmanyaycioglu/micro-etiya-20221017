@@ -29,12 +29,15 @@ public class OrderProvisionController {
 
     @GetMapping("/cancel/{oid}")
     public String cancel(@PathVariable("oid") Long orderId) {
-        return "OK";
+        orderProcessService.cancelOrder(orderId);
+        return "Canceled";
     }
 
     @GetMapping("/pause")
     public String pause(@RequestParam("oid") Long orderId) {
-        return "OK";
+
+        orderProcessService.pauseOrder(orderId);
+        return "Paused";
     }
 
 }

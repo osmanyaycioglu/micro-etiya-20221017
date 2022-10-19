@@ -1,7 +1,11 @@
 package org.training.ms.etiya.msorder.rest;
 
-import org.springframework.core.annotation.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.training.ms.etiya.msorder.rest.models.OrderRest;
+import org.training.ms.etiya.msorder.rest.models.mappers.IOrderMapper;
+import org.training.ms.etiya.msorder.services.OrderQueryService;
+import org.training.ms.etiya.msorder.services.models.Order;
 
 import java.util.List;
 
@@ -9,30 +13,33 @@ import java.util.List;
 @RequestMapping("/api/v1/order/query")
 public class OrderQueryController {
 
+    @Autowired
+    private OrderQueryService orderQueryService;
+
     @GetMapping("/get/one/{oid}")
-    public Order getOrder(@PathVariable("oid") Long orderId) {
-        return null;
+    public OrderRest getOrder(@PathVariable("oid") Long orderId) {
+        return IOrderMapper.ORDER_MAPPER.toOrderRest(orderQueryService.getOne(orderId));
     }
 
     @GetMapping("/get/all")
-    public List<Order> getAll() {
-        return null;
+    public List<OrderRest> getAll() {
+        return IOrderMapper.ORDER_MAPPER.toOrderRests(orderQueryService.getAll());
     }
 
     @GetMapping("/get/actives")
-    public List<Order> getActives() {
-        return null;
+    public List<OrderRest> getActives() {
+        return IOrderMapper.ORDER_MAPPER.toOrderRests(orderQueryService.getActiveOrders());
     }
 
     @GetMapping("/get/by/customer/name")
-    public Order getOrder(@RequestParam("name") String name,
+    public OrderRest getOrder(@RequestParam("name") String name,
                           @RequestParam("surname") String surname) {
         return null;
     }
 
     @GetMapping("/get/by/customer/number")
-    public Order getOrder(@RequestParam("number") String number) {
-        return null;
+    public List<OrderRest> getOrder(@RequestParam("number") String number) {
+        return IOrderMapper.ORDER_MAPPER.toOrderRests(orderQueryService.getOrderByNumber(number));
     }
 
 }
