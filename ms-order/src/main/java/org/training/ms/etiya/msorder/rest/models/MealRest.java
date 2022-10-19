@@ -3,7 +3,7 @@ package org.training.ms.etiya.msorder.rest.models;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 
-public class MealRest {
+public class  MealRest {
     @NotEmpty
     private String mealName;
     @Positive

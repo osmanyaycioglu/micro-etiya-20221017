@@ -15,6 +15,7 @@ public class OrderProvisionController {
     @PostMapping("/place")
     @Operation(summary = "Sipariş vermek için",description = "Sipariş listesini girilen yer.")
     public OrderResult place(@Valid @RequestBody OrderRest order) {
+
         return new OrderResult().setOrderId(1L).setDesc("OK");
     }
 
