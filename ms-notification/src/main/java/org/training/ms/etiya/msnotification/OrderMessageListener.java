@@ -15,7 +15,7 @@ public class OrderMessageListener {
             exchange = @Exchange(name = "message-exchange",durable = "true",autoDelete = "false",type = ExchangeTypes.DIRECT),
             key = "sms-send"
     ))
-    public void handleSMS(String message){
+    public void handleSMS(SendMessage message){
         System.out.println("Sending SMS : " + message);
     }
 
