@@ -37,6 +37,13 @@ public class ErrorAdvice {
                                 .setCode(1001);
     }
 
+    @ExceptionHandler(RestException.class)
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    public RestErrorObj handle(RestException exp) {
+        return createBaseError().setDesc("error while calling another ms")
+                                .setCode(1023).addSubError(exp.getRestErrorObj());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RestErrorObj handle(MethodArgumentNotValidException exp) {

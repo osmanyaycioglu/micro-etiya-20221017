@@ -19,12 +19,23 @@ public class OrderProvisionController {
     private OrderProcessService orderProcessService;
 
     // @RequestMapping(value = "/place",method = RequestMethod.POST)
-    @PostMapping("/place")
+    @PostMapping("/place1")
     @Operation(summary = "Sipariş vermek için",description = "Sipariş listesini girilen yer.")
-    public OrderResult place(@Valid @RequestBody OrderRest order) {
+    public OrderResult place1(@Valid @RequestBody OrderRest order) {
+        String aStr = orderProcessService.addOrder(IOrderMapper.ORDER_MAPPER.toOrder(order));
+        return new OrderResult().setOrderId(1L).setDesc(aStr);
+    }
 
-        orderProcessService.addOrder(IOrderMapper.ORDER_MAPPER.toOrder(order));
-        return new OrderResult().setOrderId(1L).setDesc("OK");
+    @PostMapping("/place2")
+    public OrderResult place2(@Valid @RequestBody OrderRest order) {
+        String aStr = orderProcessService.addOrder2(IOrderMapper.ORDER_MAPPER.toOrder(order));
+        return new OrderResult().setOrderId(1L).setDesc(aStr);
+    }
+
+    @PostMapping("/place3")
+    public OrderResult place3(@Valid @RequestBody OrderRest order) {
+        String aStr = orderProcessService.addOrder3(IOrderMapper.ORDER_MAPPER.toOrder(order));
+        return new OrderResult().setOrderId(1L).setDesc(aStr);
     }
 
     @GetMapping("/cancel/{oid}")

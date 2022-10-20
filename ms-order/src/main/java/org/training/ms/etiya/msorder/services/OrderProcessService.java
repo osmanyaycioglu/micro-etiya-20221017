@@ -2,8 +2,12 @@ package org.training.ms.etiya.msorder.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.training.ms.etiya.msorder.services.db.OrderDbService;
+import org.training.ms.etiya.msorder.services.integrations.AccountingIntegration;
 import org.training.ms.etiya.msorder.services.models.Order;
+
+import java.math.BigDecimal;
 
 @Service
 public class OrderProcessService {
@@ -11,9 +15,15 @@ public class OrderProcessService {
     @Autowired
     private OrderDbService orderDbService;
 
-    public Long addOrder(Order order){
+    @Autowired
+    private AccountingIntegration accountingIntegration;
+
+    @Transactional
+    public String addOrder(Order order) {
         Order order1 = orderDbService.insertOrder(order);
-        return -order1.getOrderId();
+        String s = accountingIntegration.paymentRequest(order,
+                                                        BigDecimal.valueOf(100L));
+        return s;
     }
 
     public void cancelOrder(Long orderId) {
@@ -23,4 +33,20 @@ public class OrderProcessService {
     public void pauseOrder(Long orderId) {
         orderDbService.pauseOrder(orderId);
     }
+
+    public String addOrder2(Order order) {
+        Order order1 = orderDbService.insertOrder(order);
+        String s = accountingIntegration.paymentRequest2(order,
+                                                        BigDecimal.valueOf(100L));
+        return s;
+
+    }
+    public String addOrder3(Order order) {
+        Order order1 = orderDbService.insertOrder(order);
+        String s = accountingIntegration.paymentRequest3(order,
+                                                         BigDecimal.valueOf(100L));
+        return s;
+
+    }
+
 }

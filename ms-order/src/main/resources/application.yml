@@ -1,0 +1,41 @@
+app:
+  micro:
+    name: restaurant.order.order
+server:
+  error:
+    include-binding-errors: always
+    include-exception: true
+    include-message: always
+  port: ${app.port:10000}
+spring:
+  application:
+    name: order
+  config:
+    import: configserver:http://127.0.0.1:8888
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: 123456
+    url: jdbc:postgresql://localhost:5432/etiya
+    username: postgres
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+        retry-on-all-operations: true
+        max-retries-on-next-service-instance: 3
+        max-retries-on-same-service-instance: 0
+resilience4j:
+  retry:
+    instances:
+      myAccountRetry:
+        wait-duration: '1ms'
+        max-attempts: 3
+        retry-exception-predicate: org.training.ms.etiya.msorder.services.integrations.RetryExceptionChoose
+        result-predicate: org.training.ms.etiya.msorder.services.integrations.ReturnValRetryChoose
