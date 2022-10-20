@@ -1,0 +1,27 @@
+app:
+  micro:
+    name: restaurant.order.order
+server:
+  error:
+    include-binding-errors: always
+    include-exception: true
+    include-message: always
+  port: ${app.port:7070}
+spring:
+  application:
+    name: apigw-accounting
+  config:
+    import: configserver:http://127.0.0.1:8888
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+      enabled: true
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: myroute1
+          uri: lb://ACCOUNTING
+          predicates:
+            - Path=/api/v1/payment/**

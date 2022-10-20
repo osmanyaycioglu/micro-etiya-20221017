@@ -2,6 +2,7 @@ package org.training.ms.etiya.msorder.rest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.training.ms.etiya.msorder.rest.models.OrderRest;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/order/provision")
+@RefreshScope
 public class OrderProvisionController {
 
     @Autowired
