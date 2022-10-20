@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ public class AccountingIntegration {
     private AtomicLong roundRobinIndex = new AtomicLong();
 
     @Retry(name = "myAccountRetry")
+    @CircuitBreaker(name = "myAccountCB")
     public String paymentRequest3(Order order,
                                  BigDecimal amount) {
         PaymentRequest paymentRequest = new PaymentRequest();

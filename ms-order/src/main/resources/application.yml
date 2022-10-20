@@ -39,3 +39,19 @@ resilience4j:
         max-attempts: 3
         retry-exception-predicate: org.training.ms.etiya.msorder.services.integrations.RetryExceptionChoose
         result-predicate: org.training.ms.etiya.msorder.services.integrations.ReturnValRetryChoose
+  circuitbreaker:
+    instances:
+      myAccountCB:
+        sliding-window-type: count_based
+        sliding-window-size: 20
+        minimum-number-of-calls: 10
+        failure-rate-threshold: 30
+        wait-duration-in-open-state: '4s'
+        automatic-transition-from-open-to-half-open-enabled: false
+        permitted-number-of-calls-in-half-open-state: 5
+        max-wait-duration-in-half-open-state: '10s'
+        slow-call-rate-threshold: 70
+        slow-call-duration-threshold: '200ms'
+        register-health-indicator: true
+        allow-health-indicator-to-fail: true
+

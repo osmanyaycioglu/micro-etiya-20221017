@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import org.training.ms.etiya.microservice.common.error.ErrorClientConfig;
 import org.training.ms.etiya.microservice.common.error.ErrorConfig;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"org.training.ms.etiya.msorder","org.training.microservice.resilience"})
 @EnableEurekaClient
 @EnableFeignClients
 @Import({ErrorConfig.class,
